@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Googleマップ＋カードスライド</title>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+
+      #photo {
+        background: #fff;
+        padding: 16px;
+        text-align: center;
+      }
+
+      .card {
+        width: 90%;
+        margin: 0 auto;
+        background: #f0f0f0;
+        padding: 16px;
+        border-radius: 10px;
+      }
+
+      .card img {
+        width: 100%;
+        border-radius: 8px;
+      }
+
+      span {
+        font-size: 2rem;
+        cursor: pointer;
+        margin: 0 10px;
+      }
+
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <div id="photo">
+      <div class="card" id="mainCard">
+        <span id="left">←</span>
+        <h2 id="title"></h2>
+        <img id="mainImg" src="" />
+        <p id="desc"></p>
+        <span id="right">→</span>
+      </div>
+    </div>
+
+    <!-- カードスライドJS -->
+    <script>
+      const cards = [
+        {
+          title: '渓雲閣',
+          img: 'images/01.jpg',
+          desc: 'にごり湯をかけ流し！'
+        },
+        {
+          title: '下藤屋',
+          img: 'images/02.jpg',
+          desc: '山の中の癒しの宿'
+        },
+        {
+          title: '旅館〇〇',
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        }
+      ];
+
+      let current = 0;
+
+      const title = document.getElementById('title');
+      const img = document.getElementById('mainImg');
+      const desc = document.getElementById('desc');
+      const leftArrow = document.getElementById('left');
+      const rightArrow = document.getElementById('right');
+
+      function setCard() {
+        title.textContent = cards[current].title;
+        img.src = cards[current].img;
+        desc.textContent = cards[current].desc;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        setCard();
+      });
+
+      leftArrow.addEventListener('click', () => {
+        if (current > 0) {
+          current--;
+          setCard();
+        }
+      });
+
+      rightArrow.addEventListener('click', () => {
+        if (current < cards.length - 1) {
+          current++;
+          setCard();
+        }
+      });
+    </script>
+
+    <!-- Google Maps API -->
+    <script>
+      function initMap() {
+        const center = { lat: 37.115, lng: 139.98 };
+        const map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: center
+        });
+
+        new google.maps.Marker({
+          position: center,
+          map: map,
+          title: '渓雲閣'
+        });
+      }
+    </script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAanGL60bWCdRLdFjyk-Xf_UI-HPnbHgXc&callback=initMap"
+    ></script>
+  </body>
+</html>
