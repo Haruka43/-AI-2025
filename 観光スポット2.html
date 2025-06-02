@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <title>観光マップ with スライドカード</title>
     <style>
       #map {
@@ -33,22 +33,45 @@
         width: 100%;
         border-radius: 8px;
       }
+
+      .nav-buttons {
+        position: absolute;
+        bottom: 120px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+
+      .nav-buttons span {
+        font-size: 2rem;
+        margin: 0 20px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      #instruction {
+        position: absolute;
+        bottom: 180px;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+      }
     </style>
   </head>
   <body>
     <div id="map"></div>
 
-    <div id="photo">
+    <div id="instruction">観光スポットをスライドしてご覧ください！</div>
+
+    <div class="nav-buttons">
       <span id="left">←</span>
       <span id="right">→</span>
-      <div class="card" id="mainCard">
-        <h2 id="title"></h2>
-        <img id="mainImg" src="" />
-        <p id="desc"></p>
-      </div>
     </div>
 
-    <!-- カードスライドJS -->
+    <div class="card-container" id="cardContainer"></div>
+
     <script>
       const cards = [
         {
@@ -68,39 +91,61 @@
         }
       ];
 
-      const mainCard = document.getElementById('mainCard');
-      const title = document.getElementById('title');
-      const mainImg = document.getElementById('mainImg');
-      const desc = document.getElementById('desc');
-
-      coanst[(leftArrow, rightArrow)] = [document.getElementById('left'), document.getElementById('right')];
+      const container = document.getElementById('cardContainer');
       let currentIndex = 0;
-      function updateCard(index) {
+
+      function renderCard(index) {
+        container.innerHTML = ''; // 一度全削除
         const card = cards[index];
-        title.textContent = card.title;
-        mainImg.src = card.img;
-        desc.textContent = card.desc;
+        const cardEl = document.createElement('div');
+        cardEl.className = 'card';
+        cardEl.innerHTML = `
+        <h2>${card.title}</h2>
+        <img src="${card.img}" alt="${card.title}">
+        <p>${card.desc}</p>
+      `;
+        container.appendChild(cardEl);
       }
+
       function showCard(index) {
         if (index < 0 || index >= cards.length) return;
         currentIndex = index;
-        updateCard(currentIndex);
+        renderCard(currentIndex);
       }
-      leftArrow.addEventListener('click', () => {
+
+      document.getElementById('left').addEventListener('click', () => {
         showCard(currentIndex - 1);
       });
-      rightArrow.addEventListener('click', () => {
+
+      document.getElementById('right').addEventListener('click', () => {
         showCard(currentIndex + 1);
       });
-      // 初期カード表示
-      updateCard(currentIndex);
-      const p = document.getElementById('p');
-      p.style.color = 'black';
-      p.style.fontSize = '16px';
-      p.style.fontWeight = 'bold';
-      p.style.textAlign = 'center';
-      p.style.marginTop = '10px';
-      p.textContent = '観光スポットをスライドしてご覧ください！';
+
+      // 初期表示
+      showCard(currentIndex);
+
+      // 自動再生機能（任意）
+      const button = document.createElement('button');
+      button.textContent = '自動再生する';
+      document.body.appendChild(button);
+
+      let autoplay = false;
+      let timer = null;
+
+      button.addEventListener('click', () => {
+        if (!autoplay) {
+          button.textContent = '停止する';
+          autoplay = true;
+          timer = setInterval(() => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            showCard(currentIndex);
+          }, 2000);
+        } else {
+          clearInterval(timer);
+          autoplay = false;
+          button.textContent = '自動再生する';
+        }
+      });
     </script>
 
     <!-- Google Maps API -->
