@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>観光マップ with スライドカード</title>
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+
+      .card-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        display: flex;
+        overflow-x: auto;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .card {
+        flex: 0 0 80%;
+        background: white;
+        margin-right: 10px;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .card img {
+        width: 100%;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <div id="photo">
+      <span id="left">←</span>
+      <span id="right">→</span>
+      <div class="card" id="mainCard">
+        <h2 id="title"></h2>
+        <img id="mainImg" src="" />
+        <p id="desc"></p>
+      </div>
+    </div>
+
+    <!-- カードスライドJS -->
+    <script>
+      const cards = [
+        {
+          title: '渓雲閣',
+          img: 'images/01.jpg',
+          desc: 'にごり湯をかけ流し！'
+        },
+        {
+          title: '下藤屋',
+          img: 'images/02.jpg',
+          desc: '山の中の癒しの宿'
+        },
+        {
+          title: '旅館〇〇',
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        }
+      ];
+
+      const mainCard = document.getElementById('mainCard');
+      const title = document.getElementById('title');
+      const mainImg = document.getElementById('mainImg');
+      const desc = document.getElementById('desc');
+
+      coanst[(leftArrow, rightArrow)] = [document.getElementById('left'), document.getElementById('right')];
+      let currentIndex = 0;
+      function updateCard(index) {
+        const card = cards[index];
+        title.textContent = card.title;
+        mainImg.src = card.img;
+        desc.textContent = card.desc;
+      }
+      function showCard(index) {
+        if (index < 0 || index >= cards.length) return;
+        currentIndex = index;
+        updateCard(currentIndex);
+      }
+      leftArrow.addEventListener('click', () => {
+        showCard(currentIndex - 1);
+      });
+      rightArrow.addEventListener('click', () => {
+        showCard(currentIndex + 1);
+      });
+      // 初期カード表示
+      updateCard(currentIndex);
+      const p = document.getElementById('p');
+      p.style.color = 'black';
+      p.style.fontSize = '16px';
+      p.style.fontWeight = 'bold';
+      p.style.textAlign = 'center';
+      p.style.marginTop = '10px';
+      p.textContent = '観光スポットをスライドしてご覧ください！';
+    </script>
+
+    <!-- Google Maps API -->
+    <script>
+      function initMap() {
+        const center = { lat: 37.115, lng: 139.98 };
+        const map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: center
+        });
+
+        new google.maps.Marker({
+          position: center,
+          map: map,
+          title: '渓雲閣'
+        });
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+  </body>
+</html>
