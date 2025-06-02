@@ -126,29 +126,6 @@
 
       // 初期表示
       showCard(currentIndex);
-
-      // 自動再生機能（任意）
-      const button = document.createElement('button');
-      button.textContent = '自動再生する';
-      document.body.appendChild(button);
-
-      let autoplay = false;
-      let timer = null;
-
-      button.addEventListener('click', () => {
-        if (!autoplay) {
-          button.textContent = '停止する';
-          autoplay = true;
-          timer = setInterval(() => {
-            currentIndex = (currentIndex + 1) % cards.length;
-            showCard(currentIndex);
-          }, 2000);
-        } else {
-          clearInterval(timer);
-          autoplay = false;
-          button.textContent = '自動再生する';
-        }
-      });
     </script>
 
     <!-- Google Maps API -->
