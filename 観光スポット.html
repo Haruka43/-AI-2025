@@ -2,60 +2,77 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>観光マップ</title>
+    <title>観光マップ with スライドカード</title>
     <style>
       #map {
         height: 100vh;
         width: 100%;
       }
-      .info-card {
+
+      .card-container {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        background: white;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-        padding: 16px;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-        max-height: 40%;
-        overflow: auto;
+        padding: 10px;
+        display: flex;
+        overflow-x: auto;
+        background: rgba(255, 255, 255, 0.9);
       }
-      .info-card h2 {
-        margin-top: 0;
+
+      .card {
+        flex: 0 0 80%;
+        background: white;
+        margin-right: 10px;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .card img {
+        width: 100%;
+        border-radius: 8px;
       }
     </style>
   </head>
   <body>
     <div id="map"></div>
 
-    <div class="info-card" id="infoCard">
-      <h2>秘湯にごり湯の宿 渓雲閣</h2>
-      <p>源泉である噴煙上がる硫黄山より湧くにごり湯を直接かけ流し！</p>
-      <img src="https://example.com/onsen.jpg" alt="温泉写真" style="width: 100%; border-radius: 8px" />
+    <!-- スライド可能なカード -->
+    <div class="card-container">
+      <div class="card">
+        <h2>渓雲閣</h2>
+        <img src="https://source.unsplash.com/400x200/?onsen" alt="温泉1" />
+        <p>にごり湯をかけ流し！</p>
+      </div>
+      <div class="card">
+        <h2>下藤屋</h2>
+        <img src="https://source.unsplash.com/400x200/?hotel" alt="温泉2" />
+        <p>山の中の癒しの宿。</p>
+      </div>
+      <div class="card">
+        <h2>〇〇旅館</h2>
+        <img src="https://source.unsplash.com/400x200/?spa" alt="温泉3" />
+        <p>歴史ある露天風呂。</p>
+      </div>
     </div>
 
+    <!-- Google Maps API -->
     <script>
       function initMap() {
-        const location = { lat: 37.115, lng: 139.98 }; // 渓雲閣の位置（仮）
+        const center = { lat: 37.115, lng: 139.98 };
         const map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
-          center: location
+          center: center
         });
 
-        const marker = new google.maps.Marker({
-          position: location,
+        new google.maps.Marker({
+          position: center,
           map: map,
           title: '渓雲閣'
-        });
-
-        marker.addListener('click', () => {
-          document.getElementById('infoCard').style.display = 'block';
         });
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
   </body>
 </html>
-<!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
-<!-- Note: Ensure you have a valid Google Maps API key to display the map. -->
