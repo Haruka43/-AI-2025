@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>観光マップ</title>
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+      .info-card {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        max-height: 40%;
+        overflow: auto;
+      }
+      .info-card h2 {
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <div class="info-card" id="infoCard">
+      <h2>秘湯にごり湯の宿 渓雲閣</h2>
+      <p>源泉である噴煙上がる硫黄山より湧くにごり湯を直接かけ流し！</p>
+      <img src="https://example.com/onsen.jpg" alt="温泉写真" style="width: 100%; border-radius: 8px" />
+    </div>
+
+    <script>
+      function initMap() {
+        const location = { lat: 37.115, lng: 139.98 }; // 渓雲閣の位置（仮）
+        const map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: location
+        });
+
+        const marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          title: '渓雲閣'
+        });
+
+        marker.addListener('click', () => {
+          document.getElementById('infoCard').style.display = 'block';
+        });
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+  </body>
+</html>
+<!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
+<!-- Note: Ensure you have a valid Google Maps API key to display the map. -->
