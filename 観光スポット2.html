@@ -2,8 +2,14 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>観光マップ with スライドカード</title>
+    <title>観光マップ＋仁徳天皇陵古墳</title>
     <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
       #map {
         height: 100vh;
         width: 100%;
@@ -18,6 +24,7 @@
         display: flex;
         overflow-x: auto;
         background: rgba(255, 255, 255, 0.9);
+        z-index: 5;
       }
 
       .card {
@@ -37,11 +44,10 @@
 
       .nav-buttons {
         position: absolute;
-        bottom: 1px;
+        bottom: 140px;
         left: 50%;
-        right: 50%;
-        display: flex;
         transform: translateX(-50%);
+        display: flex;
         z-index: 10;
       }
 
@@ -54,12 +60,13 @@
 
       #instruction {
         position: absolute;
-        bottom: 180px;
+        bottom: 200px;
         width: 100%;
         text-align: center;
         font-weight: bold;
         font-size: 16px;
         color: #333;
+        z-index: 10;
       }
     </style>
   </head>
@@ -76,19 +83,32 @@
     <div class="card-container" id="cardContainer"></div>
 
     <script>
-      const cards = [
+      const spots = [
+        {
+          title: '仁徳天皇陵古墳',
+          lat: 34.5617130885286,
+          lng: 135.48565486006336,
+          img: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Nintoku-tennoryo_Kofun_Tomb_02n3872.jpg',
+          desc: '世界最大級の前方後円墳。古代日本の権威を象徴します。'
+        },
         {
           title: '渓雲閣',
+          lat: 37.115,
+          lng: 139.98,
           img: 'images/01.jpg',
           desc: 'にごり湯をかけ流し！'
         },
         {
           title: '下藤屋',
+          lat: 37.116,
+          lng: 139.981,
           img: 'images/02.jpg',
           desc: '山の中の癒しの宿'
         },
         {
           title: '旅館〇〇',
+          lat: 37.117,
+          lng: 139.982,
           img: 'images/03.jpg',
           desc: '歴史ある露天風呂'
         }
@@ -96,24 +116,28 @@
 
       const container = document.getElementById('cardContainer');
       let currentIndex = 0;
+      let map;
+      let markers = [];
 
       function renderCard(index) {
-        container.innerHTML = ''; // 一度全削除
-        const card = cards[index];
+        container.innerHTML = '';
+        const spot = spots[index];
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
         cardEl.innerHTML = `
-        <h2>${card.title}</h2>
-        <img src="${card.img}" alt="${card.title}">
-        <p>${card.desc}</p>
-      `;
+          <h2>${spot.title}</h2>
+          <img src="${spot.img}" alt="${spot.title}">
+          <p>${spot.desc}</p>
+        `;
         container.appendChild(cardEl);
       }
 
       function showCard(index) {
-        if (index < 0 || index >= cards.length) return;
+        if (index < 0 || index >= spots.length) return;
         currentIndex = index;
         renderCard(currentIndex);
+        const spot = spots[currentIndex];
+        map.panTo({ lat: spot.lat, lng: spot.lng });
       }
 
       document.getElementById('left').addEventListener('click', () => {
@@ -124,26 +148,30 @@
         showCard(currentIndex + 1);
       });
 
-      // 初期表示
-      showCard(currentIndex);
-    </script>
-
-    <!-- Google Maps API -->
-    <script>
       function initMap() {
-        const center = { lat: 37.115, lng: 139.98 };
-        const map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+        const center = { lat: spots[0].lat, lng: spots[0].lng };
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
           center: center
         });
 
-        new google.maps.Marker({
-          position: center,
-          map: map,
-          title: '渓雲閣'
+        spots.forEach((spot, index) => {
+          const marker = new google.maps.Marker({
+            position: { lat: spot.lat, lng: spot.lng },
+            map: map,
+            title: spot.title
+          });
+          marker.addListener('click', () => {
+            showCard(index);
+          });
+          markers.push(marker);
         });
+
+        showCard(currentIndex);
       }
     </script>
+
+    <!-- Google Maps API 読み込み（必ず自分のAPIキーに変更） -->
     <script
       async
       defer
