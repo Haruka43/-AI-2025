@@ -1,130 +1,157 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Googleマップ＋カードスライド</title>
-    <style>
-      #map {
-        height: 400px;
-        width: 100%;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>観光コース案内</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .course-button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 16px;
+      background-color: #007ACC;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .course-button:hover {
+      background-color: #005ea6;
+    }
+    /* スクロール可能エリアのスタイル */
+    .course-details {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      max-height: calc(100vh - 150px);
+      overflow-y: auto;
+    }
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    .back-button {
+      margin-bottom: 10px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #007ACC;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #007ACC;
+      transition: background-color 0.3s;
+    }
+    .back-button:hover {
+      background-color: #e6f2ff;
+    }
+  </style>
+</head>
+<body>
 
-      #photo {
-        background: #fff;
-        padding: 16px;
-        text-align: center;
-      }
+  <!-- 初めの画面：コース選択 -->
+  <div id="selectionView" class="container">
+    <h1>観光コースを選択してください</h1>
+    <button class="course-button" onclick="selectCourse('歴史探訪')">歴史探訪</button>
+    <button class="course-button" onclick="selectCourse('自然満喫')">自然満喫</button>
+    <button class="course-button" onclick="selectCourse('グルメ巡り')">グルメ巡り</button>
+  </div>
 
-      .card {
-        width: 90%;
-        margin: 0 auto;
-        background: #f0f0f0;
-        padding: 16px;
-        border-radius: 10px;
-      }
-
-      .card img {
-        width: 100%;
-        border-radius: 8px;
-      }
-
-      span {
-        font-size: 2rem;
-        cursor: pointer;
-        margin: 0 10px;
-      }
-
-      button {
-        margin-top: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-
-    <div id="photo">
-      <div class="card" id="mainCard">
-        <span id="left">←</span>
-        <h2 id="title"></h2>
-        <img id="mainImg" src="" />
-        <p id="desc"></p>
-        <span id="right">→</span>
-      </div>
+  <!-- 次の画面：選択されたコースの詳細をスクロールで表示 -->
+  <div id="courseDetailsView" class="container hidden">
+    <button class="back-button" onclick="goBack()">戻る</button>
+    <h2 id="courseTitle"></h2>
+    <div class="course-details" id="courseContent">
+      <!-- コース詳細のコンテンツがここに挿入される -->
     </div>
+  </div>
 
-    <!-- カードスライドJS -->
-    <script>
-      const cards = [
-        {
-          title: '渓雲閣',
-          img: 'images/01.jpg',
-          desc: 'にごり湯をかけ流し！'
-        },
-        {
-          title: '下藤屋',
-          img: 'images/02.jpg',
-          desc: '山の中の癒しの宿'
-        },
-        {
-          title: '旅館〇〇',
-          img: 'images/03.jpg',
-          desc: '歴史ある露天風呂'
-        }
-      ];
-
-      let current = 0;
-
-      const title = document.getElementById('title');
-      const img = document.getElementById('mainImg');
-      const desc = document.getElementById('desc');
-      const leftArrow = document.getElementById('left');
-      const rightArrow = document.getElementById('right');
-
-      function setCard() {
-        title.textContent = cards[current].title;
-        img.src = cards[current].img;
-        desc.textContent = cards[current].desc;
+  <script>
+    function selectCourse(course) {
+      // 初めの画面を非表示、詳細画面を表示
+      document.getElementById("selectionView").classList.add("hidden");
+      document.getElementById("courseDetailsView").classList.remove("hidden");
+      
+      // 詳細画面のタイトル設定
+      document.getElementById("courseTitle").textContent = course + "コース詳細";
+      
+      // コースごとにダミーの観光スポットデータを作成
+      let stops = [];
+      if (course === "歴史探訪") {
+        stops = [
+          "城跡公園で歴史の足跡をたどる",
+          "歴史資料館で古文書を鑑賞",
+          "古い町並みの散策と伝統文化体験",
+          "伝統工芸品の展示を見学",
+          "地元の神社で静かなひと時を"
+        ];
+      } else if (course === "自然満喫") {
+        stops = [
+          "ハイキングコースで大自然を満喫",
+          "湖畔の休憩施設でリラックス",
+          "森の中の展望台からの絶景",
+          "野生動物観察エリアで自然観察",
+          "森林浴スポットで心身リフレッシュ"
+        ];
+      } else if (course === "グルメ巡り") {
+        stops = [
+          "地元の市場で新鮮食材をチェック",
+          "老舗レストランで伝統料理を堪能",
+          "地元名物カフェで休憩",
+          "伝統的なお菓子屋さんでスイーツ試食",
+          "人気のフードトラックでストリートグルメ体験"
+        ];
+      } else {
+        stops = ["該当する情報が見つかりませんでした"];
       }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        setCard();
-      });
-
-      leftArrow.addEventListener('click', () => {
-        if (current > 0) {
-          current--;
-          setCard();
-        }
-      });
-
-      rightArrow.addEventListener('click', () => {
-        if (current < cards.length - 1) {
-          current++;
-          setCard();
-        }
-      });
-    </script>
-
-    <!-- Google Maps API -->
-    <script>
-      function initMap() {
-        const center = { lat: 37.115, lng: 139.98 };
-        const map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: center
-        });
-
-        new google.maps.Marker({
-          position: center,
-          map: map,
-          title: '渓雲閣'
-        });
+      
+      // コース内容をリストにして埋め込む
+      let contentHtml = "<ul>";
+      for (let stop of stops) {
+        contentHtml += "<li>" + stop + "</li>";
       }
-    </script>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAanGL60bWCdRLdFjyk-Xf_UI-HPnbHgXc&callback=initMap"
-    ></script>
-  </body>
+      contentHtml += "</ul>";
+      document.getElementById("courseContent").innerHTML = contentHtml;
+    }
+
+    function goBack() {
+      // 詳細画面を非表示、選択画面を再表示
+      document.getElementById("courseDetailsView").classList.add("hidden");
+      document.getElementById("selectionView").classList.remove("hidden");
+      
+      // 前回のコース詳細をクリア（オプション）
+      document.getElementById("courseTitle").textContent = "";
+      document.getElementById("courseContent").innerHTML = "";
+    }
+  </script>
+
+</body>
 </html>
