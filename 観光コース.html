@@ -1,9 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>観光スポット紹介</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      .card-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+      }
+
+      .card {
+        position: relative;
+        width: 90%;
+        height: 90%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        text-align: center;
+      }
+
+      .card img.main-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .course-title {
+        background-color: #2c5e39;
+        color: white;
+        font-size: 18px;
+        padding: 6px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+
+      .description {
+        font-size: 14px;
+        margin-bottom: 12px;
+        color: #333;
+      }
+
+      .detail-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .detail-buttons button {
+        flex: 1;
+        padding: 10px;
+        background-color: #2c5e39;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .nav-button.left {
+        left: 10px;
+      }
+
+      .nav-button.right {
+        right: 10px;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="card-container" id="cardContainer"></div>
+
+    <script>
+      const course = [
+        {
+          title: '1/10 コース',
+          name: '仁徳天皇陵古墳',
+          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Nintoku_tomb_01.jpg/640px-Nintoku_tomb_01.jpg',
+          desc: '世界最大の前方後円墳で、仁徳天皇の墓とされる。'
+        },
+        {
+          title: '2/10 コース',
+          name: '大仙公園',
+          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Daisen_Park_Sakai.jpg/640px-Daisen_Park_Sakai.jpg',
+          desc: '緑豊かな公園で、散策やピクニックに最適。'
+        }
+      ];
+
+      const container = document.getElementById('cardContainer');
+      let currentIndex = 0;
+
+      function renderCard(index) {
+        container.innerHTML = '';
+        const spot = course[index];
+        const cardEl = document.createElement('div');
+        cardEl.className = 'card';
+        cardEl.innerHTML = `
+        <img id="left" class="nav-button left" src="left_button.jpeg" alt="←">
+        <div class="course-title">${spot.title}<br>${spot.name}</div>
+        <img class="main-image" src="${spot.img}" alt="${spot.name}">
+        <p class="description">${spot.desc}</p>
+        <div class="detail-buttons">
+          <button onclick="alert('詳細ページへ')">コース詳細</button>
+          <button onclick="alert('地図表示')">マップ</button>
+        </div>
+        <img id="right" class="nav-button right" src="right_button.jpeg" alt="→">
+      `;
+        container.appendChild(cardEl);
+
+        document.getElementById('left').addEventListener('click', () => {
+          showCard(index - 1);
+        });
+
+        document.getElementById('right').addEventListener('click', () => {
+          showCard(index + 1);
+        });
+      }
+
+      function showCard(index) {
+        if (index < 0 || index >= course.length) return;
+        currentIndex = index;
+        renderCard(currentIndex);
+      }
+
+      showCard(currentIndex);
+    </script>
+  </body>
 </html>
