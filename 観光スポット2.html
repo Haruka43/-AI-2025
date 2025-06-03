@@ -43,22 +43,6 @@
         border-radius: 8px;
       }
 
-      .nav-buttons {
-        position: absolute;
-        bottom: 140px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        z-index: 10;
-      }
-
-      .nav-buttons span {
-        font-size: 2rem;
-        margin: 0 20px;
-        cursor: pointer;
-        user-select: none;
-      }
-
       #instruction {
         position: absolute;
         bottom: 200px;
@@ -75,11 +59,6 @@
     <div id="map"></div>
 
     <div id="instruction">観光スポットをスライドしてご覧ください！</div>
-
-    <div class="nav-buttons">
-      <img id="left" src="left_botton.jpeg" alt="左" width="50" height="50" />
-      <img id="right" src="right_botton.jpeg" alt="右" width="50" height="50" />
-    </div>
 
     <div class="card-container" id="cardContainer"></div>
 
@@ -133,9 +112,11 @@
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
         cardEl.innerHTML = `
+          <img id="left" src="left_botton.jpeg" alt="左" width="50" height="50" />
           <h2>${spot.title}</h2>
           <img src="${spot.img}" alt="${spot.title}">
           <p>${spot.desc}</p>
+          <img id="right" src="right_botton.jpeg" alt="右" width="50" height="50" />
         `;
         container.appendChild(cardEl);
       }
