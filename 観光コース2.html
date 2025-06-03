@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>観光コース案内</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+        text-align: center;
+      }
+
+      .course-button {
+        display: inline-block;
+        padding: 12px 24px;
+        margin: 10px;
+        font-size: 16px;
+        background-color: #007acc;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .course-button:hover {
+        background-color: #005ea6;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .back-button {
+        margin: 10px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        border: 1px solid #007acc;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #007acc;
+      }
+
+      .back-button:hover {
+        background-color: #e6f2ff;
+      }
+
+      .card-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        position: relative;
+      }
+
+      .card {
+        position: relative;
+        width: 90%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        text-align: center;
+      }
+
+      .card img.main-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .course-title {
+        background-color: #2c5e39;
+        color: white;
+        font-size: 18px;
+        padding: 6px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+
+      .description {
+        font-size: 14px;
+        margin-bottom: 12px;
+        color: #333;
+      }
+
+      .detail-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .detail-buttons button {
+        flex: 1;
+        padding: 10px;
+        background-color: #2c5e39;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .nav-button.left {
+        left: 10px;
+      }
+
+      .nav-button.right {
+        right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- コース選択画面 -->
+    <div id="selectionView" class="container">
+      <h1>観光コースを選択してください</h1>
+      <button class="course-button" onclick="selectCourse('歴史探訪')">歴史探訪</button>
+      <button class="course-button" onclick="selectCourse('自然満喫')">自然満喫</button>
+      <button class="course-button" onclick="selectCourse('グルメ巡り')">グルメ巡り</button>
+    </div>
+
+    <!-- コース詳細画面（カードスライダー） -->
+    <div id="courseDetailsView" class="container hidden">
+      <button class="back-button" onclick="goBack()">戻る</button>
+      <h2 id="courseTitle"></h2>
+      <div class="card-container" id="cardContainer"></div>
+    </div>
+
+    <script>
+      const allCourses = {
+        歴史探訪: [
+          {
+            title: '1/5 コース',
+            name: '城跡公園',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Osaka_Castle_Park.jpg/640px-Osaka_Castle_Park.jpg',
+            desc: '城跡公園で歴史の足跡をたどる'
+          },
+          {
+            title: '2/5 コース',
+            name: '歴史資料館',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/National_Museum_of_Japanese_History_2008.jpg/640px-National_Museum_of_Japanese_History_2008.jpg',
+            desc: '古文書を鑑賞し歴史を感じる'
+          },
+          {
+            title: '3/5 コース',
+            name: '古い町並み',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Tsumago-juku_Nakasendo.jpg/640px-Tsumago-juku_Nakasendo.jpg',
+            desc: '町並みの散策と伝統文化体験'
+          }
+        ],
+        自然満喫: [
+          {
+            title: '1/5 コース',
+            name: 'ハイキングコース',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Hiking_trail_in_Japan.jpg/640px-Hiking_trail_in_Japan.jpg',
+            desc: '大自然の中をハイキング'
+          },
+          {
+            title: '2/5 コース',
+            name: '湖畔施設',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Lake_Yamanaka.jpg/640px-Lake_Yamanaka.jpg',
+            desc: '湖の景色でリラックス'
+          }
+        ],
+        グルメ巡り: [
+          {
+            title: '1/5 コース',
+            name: '地元市場',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Tsukiji_Fish_Market.jpg/640px-Tsukiji_Fish_Market.jpg',
+            desc: '新鮮な食材をチェック'
+          },
+          {
+            title: '2/5 コース',
+            name: '老舗レストラン',
+            img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Japanese_cuisine_Kaiseki.jpg/640px-Japanese_cuisine_Kaiseki.jpg',
+            desc: '伝統料理を堪能'
+          }
+        ]
+      };
+
+      let currentIndex = 0;
+      let currentCourse = [];
+
+      function selectCourse(courseName) {
+        currentCourse = allCourses[courseName] || [];
+        currentIndex = 0;
+        document.getElementById('selectionView').classList.add('hidden');
+        document.getElementById('courseDetailsView').classList.remove('hidden');
+        document.getElementById('courseTitle').textContent = courseName + 'コース詳細';
+        renderCard(currentIndex);
+      }
+
+      function renderCard(index) {
+        const container = document.getElementById('cardContainer');
+        container.innerHTML = '';
+        if (!currentCourse[index]) return;
+
+        const spot = currentCourse[index];
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+        <img id="left" class="nav-button left" src="left_button.jpeg" alt="←">
+        <div class="course-title">${spot.title}<br>${spot.name}</div>
+        <img class="main-image" src="${spot.img}" alt="${spot.name}">
+        <p class="description">${spot.desc}</p>
+        <div class="detail-buttons">
+          <button onclick="alert('詳細ページへ')">コース詳細</button>
+          <button onclick="alert('地図は非表示')">マップ</button>
+        </div>
+        <img id="right" class="nav-button right" src="right_button.jpeg" alt="→">
+      `;
+        container.appendChild(card);
+
+        document.getElementById('left').addEventListener('click', () => {
+          if (currentIndex > 0) renderCard(--currentIndex);
+        });
+
+        document.getElementById('right').addEventListener('click', () => {
+          if (currentIndex < currentCourse.length - 1) renderCard(++currentIndex);
+        });
+      }
+
+      function goBack() {
+        document.getElementById('courseDetailsView').classList.add('hidden');
+        document.getElementById('selectionView').classList.remove('hidden');
+        document.getElementById('cardContainer').innerHTML = '';
+        document.getElementById('courseTitle').textContent = '';
+      }
+    </script>
+  </body>
+</html>
