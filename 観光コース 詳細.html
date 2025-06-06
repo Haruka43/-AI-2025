@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大阪観光おすすめコース</title>
+  <style>
+    /* 全体のスタイル */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    /* ヘッダーのスタイル */
+    header {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    /* コンテンツ領域 */
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* セクションタイトル */
+    h2 {
+      color: #333;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* スポットの各項目 */
+    .spot {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #ccc;
+      position: relative;
+    }
+
+    .spot:last-child {
+      border-bottom: none;
+    }
+
+    .spot-title {
+      font-size: 1.2em;
+      color: #4CAF50;
+      margin-bottom: 5px;
+    }
+
+    .spot-description {
+      font-size: 1em;
+      color: #555;
+    }
+
+    /* 各スポットの間に矢印を追加する */
+    .spot:not(:last-child)::after {
+      content: "↓";
+      display: block;
+      text-align: center;
+      font-size: 1.5em;
+      margin-top: 10px;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>大阪観光おすすめコース</h1>
+  </header>
+  <div class="container">
+    <!-- コースの概要 -->
+    <section class="overview">
+      <h2>コースの概要</h2>
+      <p>
+        大阪は、歴史と現代文化が融合する魅力あふれる都市です。このコースでは、大阪の代表的な観光スポットとグルメエリアを効率よく巡るルートをご紹介します。初めに大阪のシンボルである大阪城からスタートし、新鮮な海産物が並ぶ黒門市場、にぎやかな繁華街なんば・道頓堀、最新ファッションを楽しめる心斎橋、そしてレトロな雰囲気が漂う通天閣・新世界、最後に絶景の梅田スカイビルと、バランスよく大阪の魅力を体験できます。
+      </p>
+    </section>
+
+    <!-- 各スポットの案内 -->
+    <section class="spots">
+      <h2>観光スポット一覧</h2>
+      
+      <div class="spot">
+        <div class="spot-title">1. 大阪城</div>
+        <div class="spot-description">
+          大阪の歴史を感じる象徴的な城。広大な公園と天守閣の迫力を楽しめます。
+        </div>
+      </div>
+      
+      <div class="spot">
+        <div class="spot-title">2. 黒門市場</div>
+        <div class="spot-description">
+          新鮮な海産物や地元グルメが揃う市場。食べ歩きにも最適なエリアです。
+        </div>
+      </div>
+      
+      <div class="spot">
+        <div class="spot-title">3. なんば・道頓堀</div>
+        <div class="spot-description">
+          大阪の繁華街として有名。グリコの看板前で写真撮影やたこ焼きの試食を楽しめます。
+        </div>
+      </div>
+      
+      <div class="spot">
+        <div class="spot-title">4. 心斎橋</div>
+        <div class="spot-description">
+          おしゃれなショップが立ち並ぶエリア。ショッピング好きにぴったりのスポットです。
+        </div>
+      </div>
+      
+      <div class="spot">
+        <div class="spot-title">5. 通天閣・新世界</div>
+        <div class="spot-description">
+          レトロな雰囲気が魅力のエリア。串カツなど大阪名物グルメが楽しめます。
+        </div>
+      </div>
+      
+      <div class="spot">
+        <div class="spot-title">6. 梅田スカイビル</div>
+        <div class="spot-description">
+          夜景が美しいスポット。ロマンチックな夕暮れ時の訪問がおすすめです。
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
