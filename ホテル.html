@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>観光マップ＋仁徳天皇陵古墳</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+
+      .card-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        display: flex;
+        overflow-x: auto;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 5;
+        justify-content: center;
+      }
+
+      .card {
+        position: relative;
+        flex: 0 0 80%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 60px;
+        height: 250px;
+      }
+
+      .card-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .card-content img {
+        width: 15%;
+        height: auto;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+
+      .card-content h2,
+      .card-content p {
+        margin: 10px 0;
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .nav-button.left {
+        left: 10px;
+      }
+
+      .nav-button.right {
+        right: 10px;
+      }
+
+      #instruction {
+        position: absolute;
+        bottom: 200px;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="card-container" id="cardContainer"></div>
+
+    <script>
+      const spots = [
+        {
+          title: '仁徳天皇陵古墳',
+          lat: 34.5617130885286,
+          lng: 135.48565486006336,
+          img: 'kofun.jpg',
+          desc: '世界最大級の前方後円墳。古代日本の権威を象徴します。'
+        },
+        {
+          title: '百舌鳥古墳群ビジターセンター',
+          lat: 34.56023301912434,
+          lng: 135.48639590009105,
+          img: 'mozubizita-.jpg',
+          desc: 'にごり湯をかけ流し！'
+        },
+        {
+          title: '堺市博物館',
+          lat: 34.55922020660278,
+          lng: 135.48431038289627,
+          img: 'hakubutukan.jpg',
+          desc: '山の中の癒しの宿'
+        },
+        {
+          title: '大仙公園 日本庭園',
+          lat: 34.55994182649412,
+          lng: 135.48051898104532,
+          img: 'niwa.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'こ・ふんカフェ',
+          lat: 34.565210137996665,
+          lng: 135.4919852000911,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '堺市都市緑化センター',
+          lat: 34.55638334343915,
+          lng: 135.483294965193,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '堺市茶室「伸庵」「黄梅庵」',
+          lat: 34.560155574462414,
+          lng: 135.48403175188588,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '南宗寺',
+          lat: 34.56888958690531,
+          lng: 135.46950172726895,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '百舌鳥八幡宮',
+          lat: 34.55466971519879,
+          lng: 135.4948733019398,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '卵かけめし 肉すい専門 やまや',
+          lat: 34.559108904829685,
+          lng: 135.4748054471122,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'アサイー工房 三国ヶ丘店 アサイー専門店',
+          lat: 34.56324951439168,
+          lng: 135.49269898015325,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'とんかつ・洋食の店ICHIBAN',
+          lat: 34.56307993738588,
+          lng: 135.49228231132642,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'ジェラッテリア&カフェ リカリカ',
+          lat: 34.56639489542492,
+          lng: 135.4980045781432,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'はや 総本店',
+          lat: 34.567969175753454,
+          lng: 135.49010939790872,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '菜食和合茶倉（ちゃくら）',
+          lat: 34.56776229887743,
+          lng: 135.4842997220481,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'WING TIP',
+          lat: 34.562737432268975,
+          lng: 135.48076357251728,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: 'ロルモンクレープ',
+          lat: 34.563391317898315,
+          lng: 135.479796674714,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        },
+        {
+          title: '花茶碗（古墳カレー）',
+          lat: 34.557732220504576,
+          lng: 135.48764677159676,
+          img: 'images/03.jpg',
+          desc: '歴史ある露天風呂'
+        }
+      ];
+
+      const container = document.getElementById('cardContainer');
+      let currentIndex = 0;
+      let map;
+      let markers = [];
+
+      function renderCard(index) {
+        container.innerHTML = '';
+        const spot = spots[index];
+        const cardEl = document.createElement('div');
+        cardEl.className = 'card';
+        cardEl.innerHTML = `
+        <img id="left" class="nav-button left" src="left_botton.jpeg" alt="←">
+        <div class="card-content">
+          <h2>${spot.title}</h2>
+          <img src="${spot.img}" alt="${spot.title}">
+          <p>${spot.desc}</p>
+        </div>
+        <img id="right" class="nav-button right" src="right_botton.jpeg" alt="→">
+      `;
+        container.appendChild(cardEl);
+
+        // 矢印クリック時の動作
+        document.getElementById('left').addEventListener('click', () => {
+          showCard(index - 1);
+        });
+
+        document.getElementById('right').addEventListener('click', () => {
+          showCard(index + 1);
+        });
+      }
+
+      function showCard(index) {
+        if (index < 0 || index >= spots.length) return;
+        currentIndex = index;
+        renderCard(currentIndex);
+        const spot = spots[currentIndex];
+        map.panTo({ lat: spot.lat, lng: spot.lng });
+      }
+
+      function initMap() {
+        const center = { lat: spots[0].lat, lng: spots[0].lng };
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: center
+        });
+
+        spots.forEach((spot, index) => {
+          const marker = new google.maps.Marker({
+            position: { lat: spot.lat, lng: spot.lng },
+            map: map,
+            title: spot.title
+          });
+          marker.addListener('click', () => {
+            showCard(index);
+          });
+          markers.push(marker);
+        });
+
+        showCard(currentIndex);
+      }
+    </script>
+
+    <!-- Google Maps API 読み込み（ご自身のAPIキーに変更してください） -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAanGL60bWCdRLdFjyk-Xf_UI-HPnbHgXc&callback=initMap"
+    ></script>
+  </body>
+</html>
