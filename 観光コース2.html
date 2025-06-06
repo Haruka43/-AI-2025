@@ -93,9 +93,22 @@
       const course = [
         {
           title: '1/10 コース',
-          name: '仁徳天皇陵古墳',
+          name: '百舌鳥古墳群めぐり',
           img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Nintoku_tomb_01.jpg/640px-Nintoku_tomb_01.jpg',
-          desc: '世界最大の前方後円墳で、仁徳天皇の墓とされる。'
+          desc: `
+      <ul style="text-align: left; font-size: 14px;">
+        <li><strong>百舌鳥古墳群ビジターセンター</strong><br>
+        百舌鳥・古市古墳群の歴史や魅力を学べる施設。</li><br>
+        <li><strong>堺市博物館</strong><br>
+        堺の歴史文化を伝える展示が充実。</li><br>
+        <li><strong>大仙公園 日本庭園</strong><br>
+        静かで落ち着いた日本庭園。</li><br>
+        <li><strong>仁徳天皇陵古墳（大山古墳）</strong><br>
+        世界最大の前方後円墳で、仁徳天皇の墓とされる。</li><br>
+        <li><strong>こ・ふんカフェ</strong><br>
+        古墳をテーマにしたカフェで休憩もおすすめ。</li>
+      </ul>
+    `
         },
         {
           title: '2/10 コース',
@@ -114,16 +127,16 @@
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
         cardEl.innerHTML = `
-        <img id="left" class="nav-button left" src="left_button.png" alt="←">
-        <div class="course-title">${spot.title}<br>${spot.name}</div>
-        <img class="main-image" src="${spot.img}" alt="${spot.name}">
-        <p class="description">${spot.desc}</p>
-        <div class="detail-buttons">
-          <button onclick="alert('詳細ページへ')">コース詳細</button>
-          <button onclick="alert('地図表示')">マップ</button>
-        </div>
-        <img id="right" class="nav-button right" src="right_button.png" alt="→">
-      `;
+              <img id="left" class="nav-button left" src="left_button.png" alt="←">
+              <div class="course-title">${spot.title}<br>${spot.name}</div>
+              <img class="main-image" src="${spot.img}" alt="${spot.name}">
+              <p class="description">${spot.desc}</p>
+              <div class="detail-buttons">
+                <button onclick="alert('詳細ページへ')">コース詳細</button>
+                <button onclick="alert('地図表示')">マップ</button>
+              </div>
+              <img id="right" class="nav-button right" src="right_button.png" alt="→">
+            `;
         container.appendChild(cardEl);
 
         document.getElementById('left').addEventListener('click', () => {
