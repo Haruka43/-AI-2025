@@ -108,13 +108,15 @@
         <li><strong>こ・ふんカフェ</strong><br>
         古墳をテーマにしたカフェで休憩もおすすめ。</li>
       </ul>
-    `
+    `,
+          id: 1
         },
         {
           title: '2/10 コース',
           name: '大仙公園',
           img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Daisen_Park_Sakai.jpg/640px-Daisen_Park_Sakai.jpg',
-          desc: '緑豊かな公園で、散策やピクニックに最適。'
+          desc: '緑豊かな公園で、散策やピクニックに最適。',
+          id: 2
         }
       ];
 
@@ -132,7 +134,7 @@
               <img class="main-image" src="${spot.img}" alt="${spot.name}">
               <p class="description">${spot.desc}</p>
               <div class="detail-buttons">
-                <button onclick="window.location.href='観光コース　決定.html';">コース詳細</button>
+                <button onclick="window.location.href='観光コース　決定${spot.id}.html';">コース詳細</button>
                 <button onclick="alert('地図表示')">マップ</button>
               </div>
               <img id="right" class="nav-button right" src="right_button.png" alt="→">
@@ -158,3 +160,4 @@
     </script>
   </body>
 </html>
+
