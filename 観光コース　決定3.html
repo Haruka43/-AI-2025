@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>歴史巡りコース</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: #4ebadb;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+
+      h2 {
+        color: #333;
+        border-bottom: 2px solid #5c78d6;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      .card-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+      }
+
+      .card:not(:last-child)::after {
+        content: '↓';
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2em;
+        color: #5c78d6;
+      }
+
+      .card-title {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #5c78d6;
+        margin-bottom: 10px;
+      }
+
+      .card-description {
+        font-size: 1em;
+        color: #555;
+      }
+
+      .card img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>歴史巡りコース</h1>
+    </header>
+    <div class="container">
+      <section class="overview">
+        <h2>コースの概要</h2>
+        <p>
+          大阪は、歴史と現代文化が融合する魅力あふれる都市です。このコースでは、大阪の代表的な観光スポットとグルメエリアを効率よく巡るルートをご紹介します。
+        </p>
+      </section>
+
+      <section class="spots">
+        <h2>観光スポット一覧</h2>
+        <div class="card-list">
+          <div class="card">
+            <div class="card-title">1. 百舌鳥古墳群ビジターセンター</div>
+            <div class="card-description">
+              大世界遺産「百舌鳥・古市古墳群」の価値や魅力を伝えるガイダンス機能等を備えた施設です。8K空撮映像で古墳群の雄大さを体感できるシアターや古墳グッズの販売のほか、観光案内所では、レンタサイクルの貸し出しや手荷物預かりサービス等も実施しています。本施設内の各コーナーに関する概要は以下のとおりです。
+            </div>
+            <img src="mozubizita-.jpg" alt="百舌鳥古墳群ビジターセンター" class="card-image" />
+          </div>
+
+          <div class="card">
+            <div class="card-title">2. 堺市博物館</div>
+            <div class="card-description">
+              「ここに来れば堺の歴史と文化がわかる」博物館。古代から近代まで堺の歴史を時代ごとにゾーン展開、貴重な多くの出土品や堺のまちが培ってきた文化財などの展示を、タイムスリップするような気分で見学できます。
+              また、2021年3月に古代常設展示などをリニューアルし、百舌鳥古墳群についてより深く知ることができるようになっています。
+            </div>
+            <img src="hakubutukan.jpg" alt="堺市博物館" class="card-image" />
+          </div>
+
+          <div class="card">
+            <div class="card-title">3. こ・ふんカフェ</div>
+            <div class="card-description">
+              仁徳天皇陵古墳の近くにあるカフェ。古墳を感じられる可愛いスイーツがたくさん。1番人気は、濃い抹茶の上にアイスクリーム・白玉・あんこが乗った❝古墳アイス❞。
+            </div>
+            <img src="kofuncafe.jpg" alt="こ・ふんカフェ" class="card-image" />
+          </div>
+
+          <div class="card">
+            <div class="card-title">4. 仁徳天皇陵古墳（大山古墳・大仙陵古墳）</div>
+            <div class="card-description">
+              日本最大の前方後円墳、百舌鳥耳原三陵のひとつで、前方部を南に向けた墳丘は、全長約486m、後円部径約249m、高さ約35.8m、前方部幅約307m、高さ約33.9mの規模で、三段に築成されています。左右のくびれ部に造出しがあり、三重の濠が巡っています。陪塚と考えられる古墳は10基以上に及び、5世紀中ごろの築造と考えられます。
+            </div>
+            <img src="kofun.jpg" alt="仁徳天皇陵古墳" class="card-image" />
+          </div>
+
+          <div class="card">
+            <div class="card-title">5. 大仙公園 日本庭園</div>
+            <div class="card-description">
+              大仙公園内に市制100周年を記念して造られた伝統的な作庭技術を駆使した2.6haの美しい築山林泉廻遊式庭園。花木に囲まれ風情豊かなあずまや青苔亭、映波橋･印月橋、杜若池、飛流瀑など、美しい池、流水やハナショウブ･梅など四季の花で彩られます。また景色を楽しみながら、お抹茶と菓子をお楽しみいただけます（有料）。
+            </div>
+            <img src="niwa.jpg" alt="大仙公園 日本庭園" class="card-image" />
+          </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
