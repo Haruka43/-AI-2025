@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>大仙公園コース</title>
+    <title>百舌鳥古墳群めぐり</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -36,7 +36,7 @@
       .card-list {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 40px; /* 矢印と文字のスペースを確保するため少し広げる */
       }
 
       .card {
@@ -51,13 +51,15 @@
       }
 
       .card:not(:last-child)::after {
-        content: '↓';
+        content: '↓ ' attr(data-arrow-text); /* HTMLのdata-arrow-text属性の値を表示 */
         position: absolute;
-        bottom: -25px;
+        bottom: -30px;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 2em;
+        font-size: 1.2em; /* 文字に合わせてサイズを調整 */
+        font-weight: bold;
         color: #5c78d6;
+        white-space: nowrap; /* 文字が改行されないようにする */
       }
 
       .card-title {
@@ -83,59 +85,57 @@
   </head>
   <body>
     <header>
-      <h1>大仙公園コース</h1>
+      <h1>百舌鳥古墳群めぐり</h1>
     </header>
     <div class="container">
       <section class="overview">
         <h2>コースの概要</h2>
         <p>
-          仁徳天皇陵古墳を中心に大仙公園周辺を観光するコースです。
+          大阪は、歴史と現代文化が融合する魅力あふれる都市です。このコースでは、大阪の代表的な観光スポットとグルメエリアを効率よく巡るルートをご紹介します。
         </p>
       </section>
 
       <section class="spots">
         <h2>観光スポット一覧</h2>
         <div class="card-list">
-          <div class="card">
-            <div class="card-title">1. 百舌鳥古墳群ビジターセンター</div>
+          <div class="card" data-arrow-text="約16分">
+            <div class="card-title">1. 百舌鳥八幡宮</div>
             <div class="card-description">
-              大世界遺産「百舌鳥・古市古墳群」の価値や魅力を伝えるガイダンス機能等を備えた施設です。8K空撮映像で古墳群の雄大さを体感できるシアターや古墳グッズの販売のほか、観光案内所では、レンタサイクルの貸し出しや手荷物預かりサービス等も実施しています。本施設内の各コーナーに関する概要は以下のとおりです。
+              仁徳天皇陵古墳をはじめとする百舌鳥古墳群の中に鎮座する歴史ある神社。毎年秋の月見祭で奉納される、絢爛豪華な「ふとん太鼓」は必見です。
             </div>
-            <img src="mozubizita-.jpg" alt="百舌鳥古墳群ビジターセンター" class="card-image" />
+            <img src="mozuhachimangu.jpg" alt="百舌鳥八幡宮" class="card-image" />
+          </div>
+
+          <div class="card" data-arrow-text="約54分">
+            <div class="card-title">2. とんかつ・洋食の店 ICHIBAN</div>
+            <div class="card-description">
+              三国ヶ丘駅近くの人気洋食店。昔ながらの味を受け継ぐサクサクのとんかつや、丁寧に作られたハンバーグなど、どこか懐かしい洋食メニューが揃っています。
+            </div>
+            <img src="tonkatu.jpg" alt="とんかつ・洋食の店 ICHIBAN" class="card-image" />
+          </div>
+
+          <div class="card" data-arrow-text="約22分">
+            <div class="card-title">3. 南宗寺</div>
+            <div class="card-description">
+              茶の湯の巨匠・千利休ゆかりの禅寺。国の名勝に指定されている枯山水の庭園は静寂に包まれ、心を落ち着かせてくれます。
+            </div>
+            <img src="nansozi.jpg" alt="南宗寺" class="card-image" />
+          </div>
+
+          <div class="card" data-arrow-text="約23分">
+            <div class="card-title">4.菜食和合 茶倉</div>
+            <div class="card-description">
+              旬の野菜の力を最大限に引き出した、創造性あふれるヴィーガン料理が楽しめる予約制のレストラン。目にも美しい料理の数々が、心と体を満たしてくれます。
+            </div>
+            <img src="chakura.jpg" alt="菜食和合 茶倉" class="card-image" />
           </div>
 
           <div class="card">
-            <div class="card-title">2. 堺市博物館</div>
+            <div class="card-title">5. ジェラッテリア&カフェ リカリカ</div>
             <div class="card-description">
-              「ここに来れば堺の歴史と文化がわかる」博物館。古代から近代まで堺の歴史を時代ごとにゾーン展開、貴重な多くの出土品や堺のまちが培ってきた文化財などの展示を、タイムスリップするような気分で見学できます。
-              また、2021年3月に古代常設展示などをリニューアルし、百舌鳥古墳群についてより深く知ることができるようになっています。
+              旬のフルーツをふんだんに使ったものから濃厚な定番フレーバーまで、素材の味を活かしたこだわりの手作りジェラートが味わえる人気店。常時多くの種類が並び、訪れるたびに新しい味に出会えます。
             </div>
-            <img src="hakubutukan.jpg" alt="堺市博物館" class="card-image" />
-          </div>
-
-          <div class="card">
-            <div class="card-title">3. こ・ふんカフェ</div>
-            <div class="card-description">
-              仁徳天皇陵古墳の近くにあるカフェ。古墳を感じられる可愛いスイーツがたくさん。1番人気は、濃い抹茶の上にアイスクリーム・白玉・あんこが乗った❝古墳アイス❞。
-            </div>
-            <img src="kofuncafe.jpg" alt="こ・ふんカフェ" class="card-image" />
-          </div>
-
-          <div class="card">
-            <div class="card-title">4. 仁徳天皇陵古墳（大山古墳・大仙陵古墳）</div>
-            <div class="card-description">
-              日本最大の前方後円墳、百舌鳥耳原三陵のひとつで、前方部を南に向けた墳丘は、全長約486m、後円部径約249m、高さ約35.8m、前方部幅約307m、高さ約33.9mの規模で、三段に築成されています。左右のくびれ部に造出しがあり、三重の濠が巡っています。陪塚と考えられる古墳は10基以上に及び、5世紀中ごろの築造と考えられます。
-            </div>
-            <img src="kofun.jpg" alt="仁徳天皇陵古墳" class="card-image" />
-          </div>
-
-          <div class="card">
-            <div class="card-title">5. 大仙公園 日本庭園</div>
-            <div class="card-description">
-              大仙公園内に市制100周年を記念して造られた伝統的な作庭技術を駆使した2.6haの美しい築山林泉廻遊式庭園。花木に囲まれ風情豊かなあずまや青苔亭、映波橋･印月橋、杜若池、飛流瀑など、美しい池、流水やハナショウブ･梅など四季の花で彩られます。また景色を楽しみながら、お抹茶と菓子をお楽しみいただけます（有料）。
-            </div>
-            <img src="niwa.jpg" alt="大仙公園 日本庭園" class="card-image" />
-          </div>
+            <img src="ricarica.jpg" alt="ジェラッテリア&カフェ リカリカ" class="card-image" />
           </div>
         </div>
       </section>
