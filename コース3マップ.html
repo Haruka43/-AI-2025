@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>観光マップ＋仁徳天皇陵古墳</title>
+    <title>観光マップ - 堺の歴史と匠の技コース</title>
     <style>
       html,
       body {
@@ -31,6 +31,7 @@
       .card {
         position: relative;
         flex: 0 0 80%;
+        max-width: 500px;
         background: white;
         border-radius: 16px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -46,18 +47,29 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+        overflow: hidden;
       }
 
       .card-content img {
-        width: 15%;
-        height: auto;
+        width: 100px;
+        height: 80px;
+        object-fit: cover;
         border-radius: 8px;
-        margin: 10px 0;
+        margin-bottom: 10px;
       }
 
-      .card-content h2,
+      .card-content h2 {
+        font-size: 1.2em;
+        margin: 5px 0;
+      }
+
       .card-content p {
-        margin: 10px 0;
+        font-size: 0.9em;
+        margin: 5px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
       .nav-button {
@@ -68,6 +80,18 @@
         height: 40px;
         cursor: pointer;
         z-index: 10;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 24px;
+        user-select: none;
+      }
+
+      .nav-button:hover {
+        background-color: rgba(255, 255, 255, 1);
       }
 
       .nav-button.left {
@@ -77,17 +101,6 @@
       .nav-button.right {
         right: 10px;
       }
-
-      #instruction {
-        position: absolute;
-        bottom: 200px;
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        font-size: 16px;
-        color: #333;
-        z-index: 10;
-      }
     </style>
   </head>
   <body>
@@ -95,41 +108,42 @@
     <div class="card-container" id="cardContainer"></div>
 
     <script>
+      // 「堺の歴史と匠の技コース」のスポット情報
       const spots = [
         {
-          title: '百舌鳥古墳群ビジターセンター',
-          lat: 34.56023301912434,
-          lng: 135.48639590009105,
-          img: 'mozubizita-.jpg',
-          desc: 'にごり湯をかけ流し！'
+          title: 'さかい利晶の杜',
+          lat: 34.576185,
+          lng: 135.479539,
+          img: 'risho_no_mori.jpg', // 画像はダミーです
+          desc: '千利休と与謝野晶子、堺の偉大な文化人について学べる施設。茶の湯体験もできます。'
         },
         {
-          title: '堺市博物館',
-          lat: 34.55922020660278,
-          lng: 135.48431038289627,
-          img: 'hakubutukan.jpg',
-          desc: '山の中の癒しの宿'
+          title: '堺伝統産業会館',
+          lat: 34.572765,
+          lng: 135.474668,
+          img: 'sakai_densan.jpg', // 画像はダミーです
+          desc: '世界に誇る堺打刃物をはじめ、線香や和菓子など堺の「匠の技」が集結しています。'
         },
         {
-          title: 'こ・ふんカフェ',
-          lat: 34.565210137996665,
-          lng: 135.4919852000911,
-          img: 'images/03.jpg',
-          desc: '歴史ある露天風呂'
+          title: 'かん袋',
+          lat: 34.576571,
+          lng: 135.480034,
+          img: 'kanbukuro.jpg', // 画像はダミーです
+          desc: '鎌倉時代創業の老舗。名物「くるみ餅」は、とろりとした緑の餡が絶品です。'
         },
         {
-          title: '仁徳天皇陵古墳',
-          lat: 34.5617130885286,
-          lng: 135.48565486006336,
-          img: 'kofun.jpg',
-          desc: '世界最大級の前方後円墳。古代日本の権威を象徴します。'
+          title: '開口神社',
+          lat: 34.5744,
+          lng: 135.4776,
+          img: 'aguchi_jinja.jpg', // 画像はダミーです
+          desc: '「大寺さん」の愛称で親しまれる堺の総鎮守。由緒ある神社で心を落ち着かせましょう。'
         },
         {
-          title: '大仙公園 日本庭園',
-          lat: 34.55994182649412,
-          lng: 135.48051898104532,
-          img: 'niwa.jpg',
-          desc: '歴史ある露天風呂'
+          title: '旧堺燈台',
+          lat: 34.582861,
+          lng: 135.464619,
+          img: 'sakai_lighthouse.jpg', // 画像はダミーです
+          desc: '明治時代に建てられた木造洋式燈台。堺の港のシンボルとして佇んでいます。'
         }
       ];
 
@@ -144,17 +158,16 @@
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
         cardEl.innerHTML = `
-        <img id="left" class="nav-button left" src="left_botton.jpeg" alt="←">
+        <div id="left" class="nav-button left">‹</div>
         <div class="card-content">
           <h2>${spot.title}</h2>
           <img src="${spot.img}" alt="${spot.title}">
           <p>${spot.desc}</p>
         </div>
-        <img id="right" class="nav-button right" src="right_botton.jpeg" alt="→">
+        <div id="right" class="nav-button right">›</div>
       `;
         container.appendChild(cardEl);
 
-        // 矢印クリック時の動作
         document.getElementById('left').addEventListener('click', () => {
           showCard(index - 1);
         });
@@ -165,7 +178,12 @@
       }
 
       function showCard(index) {
-        if (index < 0 || index >= spots.length) return;
+        if (index < 0) {
+          index = spots.length - 1;
+        } else if (index >= spots.length) {
+          index = 0;
+        }
+
         currentIndex = index;
         renderCard(currentIndex);
         const spot = spots[currentIndex];
@@ -175,8 +193,10 @@
       function initMap() {
         const center = { lat: spots[0].lat, lng: spots[0].lng };
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          center: center
+          zoom: 15,
+          center: center,
+          mapTypeControl: false,
+          streetViewControl: false
         });
 
         spots.forEach((spot, index) => {
@@ -195,7 +215,6 @@
       }
     </script>
 
-    <!-- Google Maps API 読み込み（ご自身のAPIキーに変更してください） -->
     <script
       async
       defer
