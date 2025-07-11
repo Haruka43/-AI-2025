@@ -103,7 +103,8 @@
           name: '大仙公園',
           img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Daisen_Park_Sakai.jpg/640px-Daisen_Park_Sakai.jpg',
           desc: '緑豊かな公園で、散策やピクニックに最適。',
-          id: 2
+          id: 2,
+          desc: ''
         },
         {
           title: '3/3 コース',
@@ -126,6 +127,7 @@
               <img id="left" class="nav-button left" src="left_botton.jpeg" alt="←">
               <div class="course-title">${spot.title}<br>${spot.name}</div>
               <img class="main-image" src="${spot.img}" alt="${spot.name}">
+              <p class="description">${spot.desc}</p>
               <div class="detail-buttons">
                 <button onclick="window.location.href='観光コース　決定${spot.id}.html';">コース詳細</button>
                 <button onclick="window.location.href='コース${spot.id}マップ.html';">マップ</button>
