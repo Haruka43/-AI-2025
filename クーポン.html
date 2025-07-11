@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>お店の一覧</title>
+
+    <style>
+      /* ページ全体の基本設定 */
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+
+      /* ヘッダー（タイトル）のスタイル */
+      header {
+        background-color: #333;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      /* カード全体を囲むコンテナのスタイル */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+        gap: 20px;
+      }
+
+      /* カード自体のスタイル */
+      .card {
+        background-color: white;
+        width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      /* カード内の画像のスタイル */
+      .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      /* カード内のテキスト部分のスタイル */
+      .card-content {
+        padding: 15px;
+        text-align: center;
+      }
+
+      /* 店名のスタイル */
+      .card-content h2 {
+        margin: 0;
+        font-size: 1.25em;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>クーポンが使えるお店</h1>
+    </header>
+
+    <main id="card-container" class="card-container"></main>
+
+    <script>
+      // --- ここに店舗のデータをまとめる ---
+      // お店を増やしたい場合は、このshops配列にデータを追加します
+      const shops = [
+        {
+          name: '店舗名A',
+          imageUrl: 'https://placehold.jp/300x200.png?text=お店の写真1',
+          altText: 'お店1の写真'
+        },
+        {
+          name: '喫茶店B',
+          imageUrl: 'https://placehold.jp/300x200.png?text=お店の写真2',
+          altText: 'お店2の写真'
+        },
+        {
+          name: 'お土産屋C',
+          imageUrl: 'https://placehold.jp/300x200.png?text=お店の写真3',
+          altText: 'お店3の写真'
+        },
+        {
+          name: 'パン屋D',
+          imageUrl: 'https://placehold.jp/300x200.png?text=お店の写真4',
+          altText: 'お店4の写真'
+        }
+      ];
+
+      // --- データをもとにHTMLを自動で生成する処理 ---
+
+      // HTMLの<main id="card-container">を取得
+      const cardContainer = document.getElementById('card-container');
+
+      // shops配列のデータ一つひとつに対して、カードを生成する
+      shops.forEach((shop) => {
+        // カードのHTML要素をJavaScriptで作成
+        const card = document.createElement('div');
+        card.className = 'card'; // CSSの.cardスタイルを適用
+
+        // カードの中身のHTMLを作成
+        card.innerHTML = `
+                <img src="${shop.imageUrl}" alt="${shop.altText}">
+                <div class="card-content">
+                    <h2>${shop.name}</h2>
+                </div>
+            `;
+
+        // 完成したカードをコンテナに追加
+        cardContainer.appendChild(card);
+      });
+    </script>
+  </body>
+</html>
