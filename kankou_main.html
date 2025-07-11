@@ -30,9 +30,10 @@
       }
 
       .card img.main-image {
-        width: 100%;
+        width: 80%;
+        height: 60%;
         border-radius: 8px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
       }
 
       .course-title {
@@ -94,7 +95,7 @@
         {
           title: '1/3 コース',
           name: '百舌鳥古墳群めぐり',
-          img: 'Nintoku_tomb_01.jpg',
+          img: 'mozubizita-.jpg',
           id: 1
         },
         {
@@ -122,15 +123,14 @@
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
         cardEl.innerHTML = `
-              <img id="left" class="nav-button left" src="left_button.png" alt="←">
+              <img id="left" class="nav-button left" src="left_botton.jpeg" alt="←">
               <div class="course-title">${spot.title}<br>${spot.name}</div>
               <img class="main-image" src="${spot.img}" alt="${spot.name}">
-              <p class="description">${spot.desc}</p>
               <div class="detail-buttons">
                 <button onclick="window.location.href='観光コース　決定${spot.id}.html';">コース詳細</button>
                 <button onclick="window.location.href='コース${spot.id}マップ.html';">マップ</button>
               </div>
-              <img id="right" class="nav-button right" src="right_button.png" alt="→">
+              <img id="right" class="nav-button right" src="right_botton.jpeg" alt="→">
             `;
         container.appendChild(cardEl);
 
