@@ -109,8 +109,8 @@
         }
 
         .nav-button {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
         }
       }
 
@@ -172,6 +172,30 @@
         document.getElementById('right').addEventListener('click', () => {
           showCard(index + 1);
         });
+      }
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+      });
+
+      function handleSwipeGesture() {
+        const swipeThreshold = 50; // 最低スワイプ距離（px）
+
+        if (touchEndX < touchStartX - swipeThreshold) {
+          // 左にスワイプ → 次のカード
+          showCard(currentIndex + 1);
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+          // 右にスワイプ → 前のカード
+          showCard(currentIndex - 1);
+        }
       }
 
       function showCard(index) {
