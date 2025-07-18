@@ -146,14 +146,14 @@
         const cardEl = document.createElement('div');
         cardEl.className = 'card';
         cardEl.innerHTML = `
-              <div id="left" class="nav-button left">‹</div>
-              <div class="card-content">
-                <h2>${spot.title}</h2>
-                <img src="${spot.img}" alt="${spot.title}">
-                <p>${spot.desc}</p>
-              </div>
-              <div id="right" class="nav-button right">›</div>
-            `;
+        <img id="left" class="nav-button left" src="left_botton.jpeg" alt="←">
+        <div class="card-content">
+          <h2>${spot.title}</h2>
+          <img src="${spot.img}" alt="${spot.title}">
+          <p>${spot.desc}</p>
+        </div>
+        <img id="right" class="nav-button right" src="right_botton.jpeg" alt="→">
+      `;
         container.appendChild(cardEl);
 
         document.getElementById('left').addEventListener('click', () => {
