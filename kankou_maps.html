@@ -255,9 +255,15 @@
           showCard(index + 1);
         });
       }
-
+      
       function showCard(index) {
-        if (index < 0 || index >= spots.length) return;
+        // カードがループするように変更
+        if (index < 0) {
+          index = spots.length - 1;
+        } else if (index >= spots.length) {
+          index = 0;
+        }
+
         currentIndex = index;
         renderCard(currentIndex);
         const spot = spots[currentIndex];
