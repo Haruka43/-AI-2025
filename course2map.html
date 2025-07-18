@@ -20,12 +20,13 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 10px;
+        padding: 40px 40px 0;
         display: flex;
         overflow-x: auto;
         background: rgba(255, 255, 255, 0.9);
         z-index: 5;
         justify-content: center;
+        height: 700px;
       }
 
       .card {
@@ -38,7 +39,7 @@
         justify-content: center;
         align-items: center;
         padding: 20px 60px;
-        height: 250px;
+        height: 630px;
       }
 
       .card-content {
@@ -49,23 +50,23 @@
       }
 
       .card-content img {
-        width: 15%;
-        height: auto;
+        width: auto;
+        height: 450px;
         border-radius: 8px;
         margin: 10px 0;
       }
 
       .card-content h2,
       .card-content p {
-        margin: 10px 0;
+        margin: 20px 0;
       }
 
       .nav-button {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
+        width: 70px;
+        height: 70px;
         cursor: pointer;
         z-index: 10;
       }
@@ -198,6 +199,29 @@
           });
           markers.push(marker);
         });
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        container.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        container.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipeGesture();
+        });
+
+        function handleSwipeGesture() {
+          const swipeThreshold = 50; // 最低スワイプ距離（px）
+
+          if (touchEndX < touchStartX - swipeThreshold) {
+            // 左にスワイプ → 次のカード
+            showCard(currentIndex + 1);
+          } else if (touchEndX > touchStartX + swipeThreshold) {
+            // 右にスワイプ → 前のカード
+            showCard(currentIndex - 1);
+          }
+        }
 
         showCard(currentIndex);
       }
