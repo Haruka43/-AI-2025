@@ -192,6 +192,18 @@
           markers.push(marker);
         });
 
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+      });
+
         function handleSwipeGesture() {
         const swipeThreshold = 50; // 最低スワイプ距離（px）
 
