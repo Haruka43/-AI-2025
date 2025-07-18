@@ -199,8 +199,8 @@
       }
 
       function showCard(index) {
-        if (index < 0 || index >= course.length) return;
-        currentIndex = index;
+        const total = course.length;
+        currentIndex = (index + total) % total; // 負の値にも対応してループ
         renderCard(currentIndex);
       }
 
