@@ -192,6 +192,18 @@
           markers.push(marker);
         });
 
+        function handleSwipeGesture() {
+        const swipeThreshold = 50; // 最低スワイプ距離（px）
+
+        if (touchEndX < touchStartX - swipeThreshold) {
+          // 左にスワイプ → 次のカード
+          showCard(currentIndex + 1);
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+          // 右にスワイプ → 前のカード
+          showCard(currentIndex - 1);
+        }
+      }
+
         showCard(currentIndex);
       }
     </script>
